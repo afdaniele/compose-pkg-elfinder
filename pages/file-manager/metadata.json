@@ -1,11 +1,11 @@
 {
-    "name" : "Example Page",
-    "package" : "template-compose-pkg",
+    "name" : "File Manager",
+    "package" : "elfinder",
     "menu_entry" : {
         "order" : 0,
         "icon" : {
             "class" : "fa",
-            "name" : "file-o"
+            "name" : "folder-o"
         },
         "responsive" : {
             "priority" : 1
@@ -14,8 +14,6 @@
     },
     "child_pages" : [],
     "access_level" : [
-        "administrator",
-        "supervisor",
-        "user"
+        "administrator"
     ]
 }

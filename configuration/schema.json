@@ -1,5 +1,16 @@
 {
     "type": "object",
-    "details": "Configuration",
-    "_data": {}
+    "details": "Mounts",
+    "_data": {
+        "mounts": {
+            "type": "array",
+            "details": "List of mounts to be shown in the File Manager page",
+            "_data": {
+            
+            },
+            "_templates": [
+                {}
+            ]
+        }
+    }
 }

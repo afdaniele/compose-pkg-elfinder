@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+AWS_PKG_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+PUBLIC_DIR=${AWS_PKG_DIR}/data/public
+COMPOSER_DIR=${AWS_PKG_DIR}/data/private/composer
+PRIVATE_DIR=${COMPOSER_DIR}/vendor/studio-42/elfinder
+
+# install elFinder
+mkdir -p "${COMPOSER_DIR}"
+composer require -d ${COMPOSER_DIR} -- studio-42/elfinder==2.1.57
+
+# allow some directories to be accessed as static assets in the package's public dir
+mkdir -p "${PUBLIC_DIR}"
+ln -s ${PRIVATE_DIR}/js ${PUBLIC_DIR}/js
+ln -s ${PRIVATE_DIR}/css ${PUBLIC_DIR}/css
+ln -s ${PRIVATE_DIR}/img ${PUBLIC_DIR}/img
+ln -s ${PRIVATE_DIR}/sounds ${PUBLIC_DIR}/sounds

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+AWS_PKG_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+
+# exec post_update
+$AWS_PKG_DIR/post_update

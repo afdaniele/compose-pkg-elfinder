@@ -1,9 +1,14 @@
 {
-    "name": "Template",
-    "description": "This is a \\compose\\ template package.",
+    "name": "elFinder",
+    "description": "\\compose\\ package adding the elFinder File Manager (https://github.com/Studio-42/elFinder).",
     "dependencies": {
         "system-packages": [],
         "packages": []
+    },
+    "core": {
+        "namespace": "elfinder",
+        "file": "elFinder.php",
+        "class": "ElFinderWrapper"
     },
     "compatibility": {
         "compose": {

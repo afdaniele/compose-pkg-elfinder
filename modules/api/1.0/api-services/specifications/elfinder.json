@@ -1,0 +1,21 @@
+{
+    "details": "API endpoints for the elFinder package",
+    "actions": {
+        "connector": {
+            "details": "Provides the PHP Connector for the elFinder file manager",
+            "access_level": [
+                "administrator"
+            ],
+            "authentication": [
+                "web"
+            ],
+            "parameters": {
+                "mandatory": {},
+                "optional": {}
+            },
+            "return": {
+                "values": {}
+            }
+        }
+    }
+}
