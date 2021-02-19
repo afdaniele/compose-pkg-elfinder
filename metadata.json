@@ -12,7 +12,7 @@
     },
     "compatibility": {
         "compose": {
-            "minimum": "v1.0.0",
+            "minimum": "v1.1.0",
             "maximum": "v2.0.0"
         }
     }
