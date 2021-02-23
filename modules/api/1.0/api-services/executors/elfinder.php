@@ -14,7 +14,10 @@ function execute(&$service, &$actionName, &$arguments) {
     //
     switch ($actionName) {
         case 'connector':
-            $connector = ElFinderWrapper::getConnector();
+            $res = ElFinderWrapper::getConnector();
+            if (!$res['success'])
+                return response400BadRequest($res['data']);
+            $connector = $res['data'];
             try {
                 $connector->run();
             } catch (Exception $e) {

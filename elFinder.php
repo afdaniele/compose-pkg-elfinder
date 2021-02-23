@@ -8,6 +8,7 @@ namespace system\packages\elfinder;
 
 use elFinder;
 use elFinderConnector;
+use system\classes\Configuration;
 use \system\classes\Core;
 
 
@@ -76,44 +77,47 @@ class ElFinderWrapper {
     // =======================================================================================================
     // Public functions
     
-    public static function getConnector(): \elFinderConnector {
+    public static function getConnector(): array {
         // Documentation for connector options:
         // https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options
+        // get configuration
+        $res = Core::getPackageSettings("elfinder");
+        if (!$res['success']) return $res;
+        // get roots
+        $res = $res['data']->get("mounts", []);
+        if (!$res['success']) return $res;
+        $roots = $res['data'];
+        // compile elfinder connector options
         $opts = [
-            // 'debug' => true,
-            'roots' => [
-                // Items volume
-                [
-                    'driver'        => 'LocalFileSystem',           // driver for accessing file system (REQUIRED)
-                    'path'          => '/tmp/',                 // path to files (REQUIRED)
-                    'URL'           => dirname($_SERVER['PHP_SELF']) . '/../files/', // URL to files (REQUIRED)
+            'roots' => array_map(function ($r){
+                return [
+                    'driver'        => $r['driver'],                // driver for accessing file system (REQUIRED)
+                    'path'          => $r['path'],                  // path to files (REQUIRED)
+                    'alias'         => $r['alias'],                 // name of the mountpoint in the file manager
+                    'URL'           => self::_formatURL($r['url']), // URL to files (REQUIRED)
                     'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-                    'uploadDeny'    => ['all'],                // All Mimetypes not allowed to upload
-                    'uploadAllow'   => ['image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'], // Mimetype `image` and `text/plain` allowed to upload
-                    'uploadOrder'   => ['deny', 'allow'],      // allowed Mimetype `image` and `text/plain` only
-                ],
-                // Trash volume
-                [
-                    'id'            => '1',
-                    'driver'        => 'Trash',
-                    'path'          => '/tmp/',
-                    'tmbURL'        => dirname($_SERVER['PHP_SELF']) . '/../files/.trash/.tmb/',
-                    'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
-                    'uploadDeny'    => ['all'],                // Recomend the same settings as the original volume that uses the trash
-                    'uploadAllow'   => ['image/x-ms-bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/x-icon', 'text/plain'], // Same as above
-                    'uploadOrder'   => ['deny', 'allow'],      // Same as above
-                ],
-            ]
+                    'uploadDeny'    => explode(',', $r['upload']['mime_types_deny']),       // All Mimetypes not allowed to upload
+                    'uploadAllow'   => explode(',', $r['upload']['mime_types_allow']),      // All Mimetypes allowed to upload
+                    'uploadOrder'   => explode(',', $r['upload']['strategy']),              // Rules order
+                ];
+            }, $roots)
         ];
         // create connector
-        return new elFinderConnector(new elFinder($opts));
+        return [
+            'success' => true,
+            'data' => new elFinderConnector(new elFinder($opts))
+        ];
     }//getConnector
     
     
     // =======================================================================================================
     // Private functions
     
+    private static function _formatURL($url) {
+        $base = Configuration::$BASE;
+        return str_replace('~', $base, str_replace('~/', '~', $url));
+    }//_formatURL
     
 }//AWS
 

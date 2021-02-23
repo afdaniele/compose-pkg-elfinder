@@ -10,15 +10,24 @@
                     "type": "object",
                     "details": "Mountpoint - Local Directory",
                     "_data": {
-                        "type": {
+                        "driver": {
                             "type": "text",
-                            "details": "Mountpoint type",
-                            "default": "local_directory",
+                            "details": "Mountpoint driver",
+                            "default": "LocalFileSystem",
                             "__form__": {
                                 "disabled": true,
                                 "hidden": true,
-                                "value": "local_directory"
+                                "value": "LocalFileSystem"
                             }
+                        },
+                        "enabled": {
+                            "type": "boolean",
+                            "details": "Whether the mountpoint is enabled",
+                            "default": true
+                        },
+                        "alias": {
+                            "type": "text",
+                            "details": "Name of the mountpoint"
                         },
                         "path": {
                             "type": "text",
@@ -26,7 +35,7 @@
                         },
                         "url": {
                             "type": "text",
-                            "details": "URL to the mountpoint"
+                            "details": "URL to the mountpoint. <code>~</code> autocompletes to <code>http(s)://HOSTNAME</code>."
                         },
                         "upload": {
                             "type": "object",
@@ -35,7 +44,7 @@
                                 "mime_types_deny": {
                                     "type": "text",
                                     "details": "MIME types that cannot be uploaded (as a comma-separated list)",
-                                    "default": "all",
+                                    "default": "none",
                                     "__form__": {
                                         "title": "Deny MIME Types"
                                     }
@@ -51,7 +60,7 @@
                                 "strategy": {
                                     "type": "enum",
                                     "details": "Order of the rules above",
-                                    "default": "deny,allow",
+                                    "default": "allow,deny",
                                     "values": [
                                         "allow,deny",
                                         "deny,allow"
