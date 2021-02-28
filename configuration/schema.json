@@ -3,12 +3,12 @@
     "details": "Mounts",
     "_data": {
         "mounts": {
-            "type": "array",
-            "details": "List of mounts to be shown in the File Manager page",
-            "_templates": {
-                "local_directory": {
+            "type": "object",
+            "details": "Mounts to be shown in the File Manager page",
+            "_data": {
+                "mount0": {
                     "type": "object",
-                    "details": "Mountpoint - Local Directory",
+                    "details": "Mountpoint #0 - Local Directory",
                     "_data": {
                         "driver": {
                             "type": "text",
@@ -23,7 +23,77 @@
                         "enabled": {
                             "type": "boolean",
                             "details": "Whether the mountpoint is enabled",
-                            "default": true
+                            "default": false
+                        },
+                        "alias": {
+                            "type": "text",
+                            "details": "Name of the mountpoint"
+                        },
+                        "path": {
+                            "type": "text",
+                            "details": "Absolute path to the mountpoint"
+                        },
+                        "url": {
+                            "type": "text",
+                            "details": "URL to the mountpoint. <code>~</code> autocompletes to <code>http(s)://HOSTNAME</code>."
+                        },
+                        "upload": {
+                            "type": "object",
+                            "details": "Upload settings",
+                            "_data": {
+                                "mime_types_deny": {
+                                    "type": "text",
+                                    "details": "MIME types that cannot be uploaded (as a comma-separated list)",
+                                    "default": "none",
+                                    "__form__": {
+                                        "title": "Deny MIME Types"
+                                    }
+                                },
+                                "mime_types_allow": {
+                                    "type": "text",
+                                    "details": "MIME types that can be uploaded (as a comma-separated list)",
+                                    "default": "none",
+                                    "__form__": {
+                                        "title": "Allow MIME Types"
+                                    }
+                                },
+                                "strategy": {
+                                    "type": "enum",
+                                    "details": "Order of the rules above",
+                                    "default": "allow,deny",
+                                    "values": [
+                                        "allow,deny",
+                                        "deny,allow"
+                                    ],
+                                    "__form__": {
+                                        "labels": [
+                                            "Allow, Deny",
+                                            "Deny,  Allow"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "mount1": {
+                    "type": "object",
+                    "details": "Mountpoint #1 - Local Directory",
+                    "_data": {
+                        "driver": {
+                            "type": "text",
+                            "details": "Mountpoint driver",
+                            "default": "LocalFileSystem",
+                            "__form__": {
+                                "disabled": true,
+                                "hidden": true,
+                                "value": "LocalFileSystem"
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean",
+                            "details": "Whether the mountpoint is enabled",
+                            "default": false
                         },
                         "alias": {
                             "type": "text",

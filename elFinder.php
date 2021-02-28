@@ -18,6 +18,7 @@ use \system\classes\Core;
 class ElFinderWrapper {
     
     private static $initialized = false;
+    private static $TRASH_DIR = "/tmp/elfinder-trash";
     
     // disable the constructor
     private function __construct() {
@@ -94,15 +95,25 @@ class ElFinderWrapper {
                     'driver'        => $r['driver'],                // driver for accessing file system (REQUIRED)
                     'path'          => $r['path'],                  // path to files (REQUIRED)
                     'alias'         => $r['alias'],                 // name of the mountpoint in the file manager
-                    'URL'           => self::_formatURL($r['url']), // URL to files (REQUIRED)
                     'trashHash'     => 't1_Lw',                     // elFinder's hash of trash folder
                     'winHashFix'    => DIRECTORY_SEPARATOR !== '/', // to make hash same to Linux one on windows too
                     'uploadDeny'    => explode(',', $r['upload']['mime_types_deny']),       // All Mimetypes not allowed to upload
                     'uploadAllow'   => explode(',', $r['upload']['mime_types_allow']),      // All Mimetypes allowed to upload
                     'uploadOrder'   => explode(',', $r['upload']['strategy']),              // Rules order
                 ];
-            }, $roots)
+            }, array_values($roots))
         ];
+        // add a trash folder
+        mkdir(ElFinderWrapper::$TRASH_DIR, 0777, true);
+        array_push($opts['roots'], [
+            'id'            => '1',
+			'driver'        => 'Trash',
+			'path'          => ElFinderWrapper::$TRASH_DIR,
+			'winHashFix'    => DIRECTORY_SEPARATOR !== '/',
+			'uploadDeny'    => ['none'],
+			'uploadAllow'   => ['all'],
+			'uploadOrder'   => ['allow', 'deny']
+        ]);
         // create connector
         return [
             'success' => true,
