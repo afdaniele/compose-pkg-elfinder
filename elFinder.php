@@ -88,6 +88,8 @@ class ElFinderWrapper {
         $res = $res['data']->get("mounts", []);
         if (!$res['success']) return $res;
         $roots = $res['data'];
+        // retain only enabled mounts
+        $roots = array_filter(array_values($roots), function ($r) {return $r['enabled'];});
         // compile elfinder connector options
         $opts = [
             'roots' => array_map(function ($r){
@@ -101,7 +103,7 @@ class ElFinderWrapper {
                     'uploadAllow'   => explode(',', $r['upload']['mime_types_allow']),      // All Mimetypes allowed to upload
                     'uploadOrder'   => explode(',', $r['upload']['strategy']),              // Rules order
                 ];
-            }, array_values($roots))
+            }, $roots)
         ];
         // add a trash folder
         mkdir(ElFinderWrapper::$TRASH_DIR, 0777, true);
