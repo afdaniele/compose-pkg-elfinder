@@ -1,3 +1,6 @@
+## 0.0.4 (March 01, 2021)
+  - removing temporary page pushed by mistake
+
 ## 0.0.3 (March 01, 2021)
   - now showing only "enabled" roots
 
