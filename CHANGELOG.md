@@ -1,3 +1,6 @@
+## 0.0.5 (March 01, 2021)
+  - minor
+
 ## 0.0.4 (March 01, 2021)
   - removing temporary page pushed by mistake
 
