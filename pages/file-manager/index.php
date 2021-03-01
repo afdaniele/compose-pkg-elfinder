@@ -14,9 +14,6 @@ $jquery_ver_legacy = "1.12.4";
 $jquery_ui_ver = "1.12.1";
 
 $requirejs_js = Core::getJSscriptURL(sprintf('require.%s.min.js', $requirejs_ver), $this_pkg);
-$jquery_js = Core::getJSscriptURL(sprintf('jquery.%s.min.js', $jquery_ver), $this_pkg);
-$jquery_legacy_js = Core::getJSscriptURL(sprintf('jquery.%s.min.js', $jquery_ver_legacy), $this_pkg);
-$jquery_ui_js = Core::getJSscriptURL(sprintf('jquery-ui.%s.min.js', $jquery_ui_ver), $this_pkg);
 $jquery_ui_css = Core::getCSSstylesheetURL(sprintf('jquery-ui.%s.css', $jquery_ui_ver), $this_pkg);
 ?>
 
@@ -173,8 +170,8 @@ $jquery_ui_css = Core::getCSSstylesheetURL(sprintf('jquery-ui.%s.css', $jquery_u
         require.config({
             baseUrl : "<?php echo $js_path ?>",
             paths : {
-                'jquery'   : old? '/<?php echo $jquery_legacy_js ?>' : '/<?php echo $jquery_js ?>',
-                'jquery-ui': '/<?php echo $jquery_ui_js ?>',
+                'jquery': old? "../js_static/jquery.<?php echo $jquery_ver_legacy ?>.min" : "../js_static/jquery.<?php echo $jquery_ver ?>.min",
+                'jquery-ui': "../js_static/jquery-ui.1.12.1.min",
                 'elfinder' : 'elfinder.min'
             },
             waitSeconds : 10 // optional
