@@ -1,0 +1,19 @@
+{
+    "name" : "Example",
+    "package" : "elfinder",
+    "menu_entry" : {
+        "order" : 0,
+        "icon" : {
+            "class" : "fa",
+            "name" : "folder-o"
+        },
+        "responsive" : {
+            "priority" : 1
+        },
+        "exclude_roles" : []
+    },
+    "child_pages" : [],
+    "access_level" : [
+        "administrator"
+    ]
+}
